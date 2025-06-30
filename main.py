@@ -1,3 +1,10 @@
+import requests
+import pandas as pd
+import sqlalchemy as db
+import os 
+from google import genai
+from google.genai import types
+
 '''
 
 Idea:
@@ -18,6 +25,7 @@ APIS:
 BONUS:
 	Access to gym 
 	Filter by equipment type
+    Food allergies
 
 
 WORKFLOW:
@@ -25,10 +33,86 @@ WORKFLOW:
     ask user questions
         strength(1), endurance(2)
         meal plan stuff
+    set up authentication for APIS
     get JSONs from APIs
     create database with JSON information
     parse inputs into specific AI queries
     display results in clean format
     bonus features if time
-    
+
 '''
+
+print("Welcome to the Fitness and Nutrition Planner!\n")
+
+
+experience = int(input("How many years of experience do you have?"))
+if experience <= 1:
+    experience = "beginner"
+elif experiene <= 4:
+    experience = "intermediate"
+else:
+    experience = "expert"
+
+workout_type = int(input("What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)"))
+if workout_type == 1:
+    workout_type = "cardio"
+elif workout_type == 2:
+    workout_type = "powerlifting"
+else:
+    workout_type = "strength"
+
+
+print()
+diet_type = int(input("What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)"))
+if diet_type == 1:
+    pass
+elif diet_type == 2:
+    pass
+else:
+    pass
+
+
+# get access tokens and sign into APIS
+
+
+workout_base_url = "https://api.api-ninjas.com/v1/exercises"
+food_base_url = "https://api.spoonacular.com/recipes/complexSearch"
+# do GET requests
+
+
+# df = pd.DataFrame.from_dict(topStories)
+
+# engine = db.create_engine('sqlite:///stories.db')
+
+# df.to_sql('top_stories', con=engine, if_exists='replace', index=False)
+
+# with engine.connect() as connection:
+#    query_result = connection.execute(db.text("SELECT * FROM top_stories LIMIT 5;")).fetchall()
+#    print(pd.DataFrame(query_result))
+
+
+# # Set environment variables
+# my_api_key = os.getenv('GENAI_KEY')
+
+# genai.api_key = my_api_key
+
+
+# # WRITE YOUR CODE HERE
+
+# # Create an genAI client using the key from our environment variable
+# client = genai.Client(
+#     api_key=my_api_key,
+# )
+
+# # Specify the model to use and the messages to send
+# response = client.models.generate_content(
+#     model="gemini-2.5-flash",
+#     config=types.GenerateContentConfig(
+#       system_instruction="You are a university instructor and can explain programming concepts clearly in a few words."
+#     ),
+#     contents="What are the advantages of pair programming?",
+# )
+
+
+# print(response.text)
+print("Enjoy your workout and nutrition plan!")
