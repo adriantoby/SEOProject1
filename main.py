@@ -80,22 +80,26 @@ else:
 # get access tokens and sign into APIS
 
 load_dotenv()
+exercise_api_key = os.getenv("EXERCISE_API_KEY")
 food_api_key = os.getenv("FOOD_API_KEY")
-exercise_api_key = os.getenv("EXERCISE_API")
 
-headers = {
-    "x-api-key": food_api_key
+exercise_headers = {
+    'X-Api-Key': exercise_api_key
 }
 
-headers = {
-    "x-api-key": exercise_api_key
+
+food_headers = {
+    "x-api-key": food_api_key
 }
 
 exercise_base_url = "https://api.api-ninjas.com/v1/exercises"
 food_base_url = "https://api.spoonacular.com/recipes/"
+
 # do GET requests
-response = requests.get(food_base_url + "random", headers=headers)
+response = requests.get(exercise_base_url + "?name=press", headers=exercise_headers)
 print(response.json())
+# response = requests.get(food_base_url + "random", headers=food_headers)
+# print(response.json())
 
 
 # df = pd.DataFrame.from_dict(topStories)
