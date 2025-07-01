@@ -81,16 +81,28 @@ else:
 
 load_dotenv()
 food_api_key = os.getenv("FOOD_API_KEY")
+exercise_api_key = os.getenv("EXERCISE_API")
 
 headers = {
     "x-api-key": food_api_key
 }
 
-workout_base_url = "https://api.api-ninjas.com/v1/exercises"
+headers = {
+    "x-api-key": exercise_api_key
+}
+
+exercise_base_url = "https://api.api-ninjas.com/v1/exercises"
 food_base_url = "https://api.spoonacular.com/recipes/"
 # do GET requests
 response = requests.get(food_base_url + "random", headers=headers)
 print(response.json())
+
+response = requests.get(exercise_base_url + "random", headers=headers)
+print(response.json())
+
+
+
+
 
 
 # df = pd.DataFrame.from_dict(topStories)
