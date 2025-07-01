@@ -5,6 +5,10 @@ import os
 from google import genai
 from google.genai import types
 
+
+#API:
+
+
 '''
 
 Idea:
@@ -97,6 +101,8 @@ food_base_url = "https://api.spoonacular.com/recipes/complexSearch"
 # genai.api_key = my_api_key
 
 
+
+
 # # WRITE YOUR CODE HERE
 
 # # Create an genAI client using the key from our environment variable
@@ -115,4 +121,6 @@ food_base_url = "https://api.spoonacular.com/recipes/complexSearch"
 
 
 # print(response.text)
+
+
 print("Enjoy your workout and nutrition plan!")
