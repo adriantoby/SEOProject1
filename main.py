@@ -85,8 +85,8 @@ headers = {
 workout_base_url = "https://api.api-ninjas.com/v1/exercises"
 food_base_url = "https://api.spoonacular.com/recipes/"
 # do GET requests
-response = requests.get(food_base_url + "random", headers=headers)
-print(response.json())
+# response = requests.get(food_base_url + "random", headers=headers)
+# print(response.json())
 
 
 # df = pd.DataFrame.from_dict(topStories)
@@ -100,26 +100,22 @@ print(response.json())
 #    print(pd.DataFrame(query_result))
 
 
-# # Set environment variables
-# my_api_key = os.getenv('GENAI_KEY')
+my_api_key = os.getenv('GENAI_API_KEY')
 
-# genai.api_key = my_api_key
+genai.api_key = my_api_key
 
-
-# # WRITE YOUR CODE HERE
-
-# # Create an genAI client using the key from our environment variable
-# client = genai.Client(
-#     api_key=my_api_key,
-# )
+# Create an genAI client using the key from our environment variable
+client = genai.Client(
+    api_key=my_api_key,
+)
 
 # # Specify the model to use and the messages to send
 # response = client.models.generate_content(
 #     model="gemini-2.5-flash",
 #     config=types.GenerateContentConfig(
-#       system_instruction="You are a university instructor and can explain programming concepts clearly in a few words."
+#       system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences."
 #     ),
-#     contents="What are the advantages of pair programming?",
+#     contents="What is a good workout and nutrition plan for someone that wants to go into bodybuilding?",
 # )
 
 
