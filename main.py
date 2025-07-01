@@ -4,6 +4,7 @@ import sqlalchemy as db
 import os 
 from google import genai
 from google.genai import types
+from dotenv import load_dotenv
 
 '''
 
@@ -45,15 +46,15 @@ WORKFLOW:
 print("Welcome to the Fitness and Nutrition Planner!\n")
 
 
-experience = int(input("How many years of experience do you have?"))
+experience = int(input("How many years of experience do you have?\n"))
 if experience <= 1:
     experience = "beginner"
-elif experiene <= 4:
+elif experience <= 4:
     experience = "intermediate"
 else:
     experience = "expert"
 
-workout_type = int(input("What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)"))
+workout_type = int(input("What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"))
 if workout_type == 1:
     workout_type = "cardio"
 elif workout_type == 2:
@@ -63,7 +64,7 @@ else:
 
 
 print()
-diet_type = int(input("What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)"))
+diet_type = int(input("What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)\n"))
 if diet_type == 1:
     pass
 elif diet_type == 2:
@@ -74,10 +75,18 @@ else:
 
 # get access tokens and sign into APIS
 
+load_dotenv()
+food_api_key = os.getenv("FOOD_API_KEY")
+
+headers = {
+    "x-api-key": food_api_key
+}
 
 workout_base_url = "https://api.api-ninjas.com/v1/exercises"
-food_base_url = "https://api.spoonacular.com/recipes/complexSearch"
+food_base_url = "https://api.spoonacular.com/recipes/"
 # do GET requests
+response = requests.get(food_base_url + "random", headers=headers)
+print(response.json())
 
 
 # df = pd.DataFrame.from_dict(topStories)
