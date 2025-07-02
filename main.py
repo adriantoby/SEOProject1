@@ -7,7 +7,7 @@ from google.genai import types
 from dotenv import load_dotenv
 
 
-print("Welcome to the Fitness and Nutrition Planner!\n")
+print("Welcome to NutriFit: Your Convenient Fitness and Nutrition Planner!\n")
 
 experience = -1
 while experience not in ["beginner", "intermediate", "expert"]:
