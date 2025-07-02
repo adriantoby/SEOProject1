@@ -28,9 +28,10 @@ while experience not in ["beginner", "intermediate", "expert"]:
 
 print()
 goal = -1
+text = "What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"
 while goal not in ["endurance", "strength", "bodybuilding"]:
     try:
-        goal = int(input("What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"))
+        goal = int(input(text))
     except ValueError:
         print("\nPlease enter a valid option.")
         continue
