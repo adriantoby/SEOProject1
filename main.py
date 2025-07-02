@@ -95,7 +95,7 @@ food_base_url = "https://api.spoonacular.com/recipes/"
 
 # do GET requests
 # response = requests.get(exercise_base_url + f"?difficulty={experience}&type={workout_type}", headers=exercise_headers)
-response = requests.get(food_base_url + "findByNutrients?minProtein=35", headers=food_headers)
+response = requests.get(food_base_url + "findByNutrients?minProtein=45", headers=food_headers)
 # print(response.json())
 
 
@@ -108,7 +108,7 @@ df.to_sql('foods', con=engine, if_exists='replace', index=False)
 
 with engine.connect() as connection:
    query_result = connection.execute(db.text("SELECT * FROM foods;")).fetchall()
-   print(pd.DataFrame(query_result))
+#    print(pd.DataFrame(query_result))
 
 
 my_api_key = os.getenv('GENAI_API_KEY')
@@ -126,11 +126,12 @@ client = genai.Client(
 #     config=types.GenerateContentConfig(
 #       system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences."
 #     ),
-#     contents=f"Look through {pd.DataFrame(query_result)} and create a workout routine for {experience}s who want to focus on {goal}. Keep the workout plan optimal, and explain your reasoning in a concise manner.",
+#     contents=f"Look through {pd.DataFrame(query_result)} and create a nutrition plan for {experience}s who want to focus on {goal}. Keep the nutrition plan optimal, and explain your reasoning in a concise manner.",
 # )
 
+# Look through {pd.DataFrame(query_result)} and create a workout routine for {experience}s who want to focus on {goal}. Keep the workout plan optimal, and explain your reasoning in a concise manner.
 
-# print(response.text)
+print(response.text)
 
 
 print("Enjoy your workout and nutrition plan!")
