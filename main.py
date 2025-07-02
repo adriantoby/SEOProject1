@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 import sqlalchemy as db
-import os 
+import os
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
@@ -13,7 +13,7 @@ experience = -1
 while experience not in ["beginner", "intermediate", "expert"]:
     try:
         experience = int(input("How many years of experience do you have?\n"))
-    except:
+    except ValueError:
         print("\nPlease enter a valid number of years.")
         continue
 
@@ -31,7 +31,7 @@ goal = -1
 while goal not in ["endurance", "strength", "bodybuilding"]:
     try:
         goal = int(input("What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"))
-    except:
+    except ValueError:
         print("\nPlease enter a valid option.")
         continue
 
@@ -130,11 +130,12 @@ client = genai.Client(
 response = client.models.generate_content(
     model="gemini-2.5-flash",
     config=types.GenerateContentConfig(
-      system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences. You provide clear and concise plans and explanations, with the most valuable information possible without the fluff. You always remove markdown syntax from your answer but leave it in an easy-to-read and similar format."
+      system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences. " \
+      "You provide clear and concise plans and explanations, with the most valuable information possible without the fluff. You always remove markdown syntax from your answer but leave it in an easy-to-read and similar format."
     ),
     contents=f"Look through {exercise_query_result} and {food_query_result} to create a workout and nutrition plan for {experience}s who want to focus on {goal} with a {diet_type}-focused diet. Keep both plans optimal and explained-well yet concise. Do not include IDs of the recipes in your answer.",
 )
 
 print(response.text)
 print()
-print("Enjoy your workout and nutrition plan!")
+print("Enjoy your NutriFit workout and nutrition plan!")
