@@ -1,8 +1,9 @@
 def years_of_experience():
     experience = -1
+    text = "How many years have you been exercising?\n"
     while experience not in ["beginner", "intermediate", "expert"]:
         try:
-            experience = int(input("How many years of experience do you have?\n"))
+            experience = int(input(text))
         except ValueError:
             print("\nPlease enter a valid number of years.")
             continue
@@ -48,10 +49,10 @@ def workout_info():
 def diet():
     print()
     diet_type = -1
-    text = "What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)\n"
+    t = "What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)\n"
     while diet_type not in ["vegetarian", "low-carb", "high-protein"]:
         try:
-            diet_type = int(input(text))
+            diet_type = int(input(t))
         except ValueError:
             print("\nPlease enter a valid option.")
             continue
