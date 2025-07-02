@@ -45,38 +45,71 @@ WORKFLOW:
 
 print("Welcome to the Fitness and Nutrition Planner!\n")
 
+experience = -1
+while experience not in ["beginner", "intermediate", "expert"]:
+    try:
+        experience = int(input("How many years of experience do you have?\n"))
+    except:
+        print("\nPlease enter a valid number of years.")
+        continue
 
-experience = int(input("How many years of experience do you have?\n"))
-if experience <= 1:
-    experience = "beginner"
-elif experience <= 4:
-    experience = "intermediate"
-else:
-    experience = "expert"
+    if experience == 0 or experience == 1:
+        experience = "beginner"
+    elif experience > 1 and experience <= 4:
+        experience = "intermediate"
+    elif experience > 4:
+        experience = "expert"
+    else:
+        print("\nPlease enter a valid number of years.")
 
-goal = int(input("What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"))
-if goal == 1:
-    workout_type = "cardio"
-elif goal == 2:
-    workout_type = "powerlifting"
-else:
-    workout_type = "strength"
+print()
+goal = -1
+while goal not in ["endurance", "strength", "bodybuilding"]:
+    try:
+        goal = int(input("What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"))
+    except:
+        print("\nPlease enter a valid option.")
+        continue
+
+    if goal == 1:
+        goal = "endurance"
+        workout_type = "cardio"
+    elif goal == 2:
+        goal = "strength"
+        workout_type = "powerlifting"
+    elif goal == 3:
+        goal = "bodybuilding"
+        workout_type = "strength"
+    else:
+        print("\nPlease enter a valid option.")
 
 
 print()
-diet_type = int(input("What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)\n"))
-if diet_type == 1:
-    pass
-elif diet_type == 2:
-    pass
-else:
-    pass
+diet_type = -1
+while diet_type not in ["vegetarian", "low-carb", "high-protein"]:
+    try:
+        diet_type = int(input("What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)\n"))
+    except:
+        print("\nPlease enter a valid option.")
+        continue
+
+    if diet_type == 1:
+        diet_type = "vegetarian"
+        food_base_url_extension = "complexSearch?diet=vegetarian"
+    elif diet_type == 2:
+        diet_type = "low-carb"
+        food_base_url_extension = "findByNutrients?minCarbs=15&maxCarbs=35"
+    elif diet_type == 3:
+        diet_type = "high-protein"
+        food_base_url_extension = "findByNutrients?minProtein=45"
+    else:
+        print("\nPlease enter a valid option.")
 
 print()
 print("Generating program...\n")
 
-# get access tokens and sign into APIS
 
+# get access tokens and sign into APIS
 load_dotenv()
 exercise_api_key = os.getenv("EXERCISE_API_KEY")
 food_api_key = os.getenv("FOOD_API_KEY")
@@ -95,8 +128,8 @@ food_base_url = "https://api.spoonacular.com/recipes/"
 
 # do GET requests
 # response = requests.get(exercise_base_url + f"?difficulty={experience}&type={workout_type}", headers=exercise_headers)
-response = requests.get(food_base_url + "findByNutrients?minProtein=45", headers=food_headers)
-# print(response.json())
+response = requests.get(food_base_url + food_base_url_extension, headers=food_headers)
+print(response.json())
 
 
 df = pd.DataFrame.from_dict(response.json())
@@ -108,7 +141,7 @@ df.to_sql('foods', con=engine, if_exists='replace', index=False)
 
 with engine.connect() as connection:
    query_result = connection.execute(db.text("SELECT * FROM foods;")).fetchall()
-#    print(pd.DataFrame(query_result))
+   print(pd.DataFrame(query_result))
 
 
 my_api_key = os.getenv('GENAI_API_KEY')
@@ -126,12 +159,11 @@ client = genai.Client(
 #     config=types.GenerateContentConfig(
 #       system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences."
 #     ),
-#     contents=f"Look through {pd.DataFrame(query_result)} and create a nutrition plan for {experience}s who want to focus on {goal}. Keep the nutrition plan optimal, and explain your reasoning in a concise manner.",
+#     contents=f"Look through {pd.DataFrame(query_result)} and create a nutrition plan for {experience}s who want to focus on {goal} with a {diet_type}-focused diet. Keep the nutrition plan optimal, and explain your reasoning in a concise manner.",
 # )
 
 # Look through {pd.DataFrame(query_result)} and create a workout routine for {experience}s who want to focus on {goal}. Keep the workout plan optimal, and explain your reasoning in a concise manner.
 
-print(response.text)
-
-
+# print(response.text)
+print()
 print("Enjoy your workout and nutrition plan!")
