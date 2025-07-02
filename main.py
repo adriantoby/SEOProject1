@@ -53,7 +53,7 @@ diet_type = -1
 while diet_type not in ["vegetarian", "low-carb", "high-protein"]:
     try:
         diet_type = int(input("What diet do you prefer? (1-Vegetarian, 2-Low Carb, 3-High Protein)\n"))
-    except:
+    except ValueError:
         print("\nPlease enter a valid option.")
         continue
 
@@ -130,8 +130,7 @@ client = genai.Client(
 response = client.models.generate_content(
     model="gemini-2.5-flash",
     config=types.GenerateContentConfig(
-      system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences. " \
-      "You provide clear and concise plans and explanations, with the most valuable information possible without the fluff. You always remove markdown syntax from your answer but leave it in an easy-to-read and similar format."
+      system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences. You provide clear and concise plans and explanations, with the most valuable information possible without the fluff. You always remove markdown syntax from your answer but leave it in an easy-to-read and similar format."
     ),
     contents=f"Look through {exercise_query_result} and {food_query_result} to create a workout and nutrition plan for {experience}s who want to focus on {goal} with a {diet_type}-focused diet. Keep both plans optimal and explained-well yet concise. Do not include IDs of the recipes in your answer.",
 )
