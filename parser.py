@@ -22,7 +22,7 @@ def years_of_experience():
 def workout_info():
     print()
     goal = -1
-    text = "What is your workout goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"
+    text = "What is your goal? (1-Endurance, 2-Strength, 3-Bodybuilding)\n"
     while goal not in ["endurance", "strength", "bodybuilding"]:
         try:
             goal = int(input(text))
