@@ -127,26 +127,29 @@ exercise_base_url = "https://api.api-ninjas.com/v1/exercises"
 food_base_url = "https://api.spoonacular.com/recipes/"
 
 # do GET requests
-# exercise_response = requests.get(exercise_base_url + f"?difficulty={experience}&type={workout_type}", headers=exercise_headers)
-# exercises = exercise_response.json()
+exercise_response = requests.get(exercise_base_url + f"?difficulty={experience}&type={workout_type}", headers=exercise_headers)
+exercises = exercise_response.json()
 
 food_response = requests.get(food_base_url + food_base_url_extension, headers=food_headers)
 foods = food_response.json()
 if diet_type == "vegetarian":
     foods = foods["results"]
 
+# print(exercises)
 # print(foods)
 
 
+exercise_df = pd.DataFrame.from_dict(exercises)
 food_df = pd.DataFrame.from_dict(foods)
 
 engine = db.create_engine('sqlite:///health.db')
 
-# df.to_sql('exercises', con=engine, if_exists='replace', index=False)
-food_df.to_sql('foods', con=engine, if_exists='replace', index=False)
+exercise_df.to_sql('exercises', con=engine, if_exists='append', index=False)
+food_df.to_sql('foods', con=engine, if_exists='append', index=False)
 
 with engine.connect() as connection:
-   query_result = connection.execute(db.text("SELECT * FROM foods;")).fetchall()
+    exercise_query_result = connection.execute(db.text("SELECT * FROM exercises;")).fetchall()
+    food_query_result = connection.execute(db.text("SELECT * FROM foods;")).fetchall()
 #    print(pd.DataFrame(query_result))
 
 
@@ -163,12 +166,10 @@ client = genai.Client(
 response = client.models.generate_content(
     model="gemini-2.5-flash",
     config=types.GenerateContentConfig(
-      system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences."
+      system_instruction="You are a professional fitness and nutrition coach who knows how to make the most optimal fitness and nutrition plans for a user based on their experience and preferences. You provide clear and concise plans and explanations, with the most valuable information possible without the fluff. You always remove markdown syntax from your answer but leave it in an easy-to-read and similar format."
     ),
-    contents=f"Look through {pd.DataFrame(query_result)} and create a nutrition plan for {experience}s who want to focus on {goal} with a {diet_type}-focused diet. Keep the nutrition plan optimal, and explain your reasoning in a concise manner.",
+    contents=f"Look through {exercise_query_result} and {food_query_result} to create a workout and nutrition plan for {experience}s who want to focus on {goal} with a {diet_type}-focused diet. Keep both plans optimal and explained-well yet concise. Do not include IDs of the recipes in your answer.",
 )
-
-# Look through {pd.DataFrame(query_result)} and create a workout routine for {experience}s who want to focus on {goal}. Keep the workout plan optimal, and explain your reasoning in a concise manner.
 
 print(response.text)
 print()
