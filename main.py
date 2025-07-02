@@ -99,7 +99,7 @@ exercise_response = requests.get(exercise_base_url +
 f"?difficulty={experience}&type={workout_type}", headers=exercise_headers)
 exercises = exercise_response.json()
 
-food_response = requests.get(food_base_url + 
+food_response = requests.get(food_base_url +
 food_base_url_extension, headers=food_headers)
 foods = food_response.json()
 if diet_type == "vegetarian":
@@ -120,9 +120,9 @@ food_df.to_sql('foods', con=engine, if_exists='replace', index=False)
 
 with engine.connect() as connection:
     exercise_query_result = connection.execute(
-    db.text("SELECT * FROM exercises;")).fetchall()
+        db.text("SELECT * FROM exercises;")).fetchall()
     food_query_result = connection.execute(
-    db.text("SELECT * FROM foods;")).fetchall()
+        db.text("SELECT * FROM foods;")).fetchall()
 #    print(pd.DataFrame(query_result))
 
 
