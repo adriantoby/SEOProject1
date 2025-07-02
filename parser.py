@@ -18,6 +18,7 @@ def years_of_experience():
 
     return experience
 
+
 def workout_info():
     print()
     goal = -1
@@ -43,6 +44,7 @@ def workout_info():
 
     return goal, workout_type
 
+
 def diet():
     print()
     diet_type = -1
@@ -67,4 +69,3 @@ def diet():
             print("\nPlease enter a valid option.")
 
     return diet_type, food_base_url_extension
-    
