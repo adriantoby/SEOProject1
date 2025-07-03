@@ -17,4 +17,4 @@ jobs:
 
       - name: Test with unittest
         working-directory: .
-        run: python3 -m unittest test_parser.py
+        run: python3 -m unittest test_main.py
