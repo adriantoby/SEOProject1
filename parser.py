@@ -70,3 +70,49 @@ def diet():
             print("\nPlease enter a valid option.")
 
     return diet_type, food_base_url_extension
+
+
+# unit testing versions
+def input_yoe(experience):
+    if experience == 0 or experience == 1:
+        experience = "beginner"
+    elif experience > 1 and experience <= 4:
+        experience = "intermediate"
+    elif experience > 4:
+        experience = "expert"
+    else:
+        experience = "\nPlease enter a valid number of years."
+
+    return experience
+
+
+def input_goal(goal):
+    if goal == 1:
+        goal = "endurance"
+        workout_type = "cardio"
+    elif goal == 2:
+        goal = "strength"
+        workout_type = "powerlifting"
+    elif goal == 3:
+        goal = "bodybuilding"
+        workout_type = "strength"
+    else:
+        goal = workout_type = "\nPlease enter a valid option."
+
+    return goal, workout_type
+
+
+def input_diet(diet_type):
+    if diet_type == 1:
+        diet_type = "vegetarian"
+        food_base_url_extension = "complexSearch?diet=vegetarian"
+    elif diet_type == 2:
+        diet_type = "low-carb"
+        food_base_url_extension = "findByNutrients?minCarbs=15&maxCarbs=35"
+    elif diet_type == 3:
+        diet_type = "high-protein"
+        food_base_url_extension = "findByNutrients?minProtein=45"
+    else:
+        diet_type = food_base_url_extension = "\nPlease enter a valid option."
+
+    return diet_type, food_base_url_extension
