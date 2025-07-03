@@ -60,8 +60,8 @@ food_df = pd.DataFrame.from_dict(foods)
 
 engine = db.create_engine('sqlite:///health.db')
 
-exercise_df.to_sql('exercises', con=engine, if_exists='replace', index=False)
-food_df.to_sql('foods', con=engine, if_exists='replace', index=False)
+exercise_df.to_sql('exercises', con=engine, if_exists='append', index=False)
+food_df.to_sql('foods', con=engine, if_exists='append', index=False)
 
 with engine.connect() as connection:
     exercise_query_result = connection.execute(
